@@ -19,6 +19,7 @@
     "jsonwebtoken": "^7.4.0",
     "md5": "^2.2.1",
     "mongoose": "^4.11.0",
+    "poloniex-api-node": "^1.8.1",
     "sendgrid": "^2.0.0"
   },
   "devDependencies": {
