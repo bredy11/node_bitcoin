@@ -1,22 +1,22 @@
-function usuarioDao(connection) {
-    this._connection = connection;
-}
+ var connection = require('../infra/connectionMysql')
 
-usuarioDao.prototype.salva = async (usuario, callback) =>{
-    await this._connection.query('insert into usuario set ?', usuario, callback);
-}
+ exports.create = async (data) => {
 
-usuarioDao.prototype.lista = function (callback) {
-   this._connection.query('select * from usuario', callback);
-}
+     console.log(conexao);
+     try {
 
-usuarioDao.prototype.login = function (usuarioLogin, callback) {
-    console.log(usuarioLogin.login);
-    this._connection.query("select * from usuario where email = ? and senha=?",
-        [usuarioLogin.login,usuarioLogin.senha], callback);
+         await connection.query('insert into usuario set ?', data);
+     } catch (error) {
+         console.log(error);
+     }
+ }
 
-}
- 
-module.exports = function () {
-    return usuarioDao;
-};
+ exports.authenticate = async (data) => {
+     const res = await connection.query("select * from usuario where email = ? and senha=?", [data.login, data.senha]);
+     return res;
+ }
+
+ exports.getById = async (id) => {
+     const res = await await connection.query('select * from usuario where id=?', [id]);
+     return res;
+ }
