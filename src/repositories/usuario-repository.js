@@ -1,22 +1,34 @@
- var connection = require('../infra/connectionMysql')
+var connection = require('../infra/connectionMysql')
 
- exports.create = async (data) => {
+exports.create = async (data) => {
 
-     console.log(conexao);
-     try {
+    try {
 
-         await connection.query('insert into usuario set ?', data);
-     } catch (error) {
-         console.log(error);
-     }
- }
+        await connection.query('insert into usuario set ?', data);
+    } catch (error) {
+        console.log(error);
+    }
+}
 
- exports.authenticate = async (data) => {
-     const res = await connection.query("select * from usuario where email = ? and senha=?", [data.login, data.senha]);
-     return res;
- }
+exports.authenticate = async (data) => {
+    console.log(data);
+    try {
 
- exports.getById = async (id) => {
-     const res = await await connection.query('select * from usuario where id=?', [id]);
-     return res;
- }
+        const res = await connection.query("select * from usuario where email = ? and senha=?", [data.email, data.senha]);
+        return res;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+exports.getById = async (id) => {
+    try {
+
+        const res = await connection.query('select * from usuario where usuario_id=?', [id]);
+        return res;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
