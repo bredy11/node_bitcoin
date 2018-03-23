@@ -38,8 +38,8 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRoute);
-app.use('/products', productRoute);
+//app.use('/products', productRoute);
 app.use('/customers', customerRoute);
-app.use('/orders', orderRoute);
+//app.use('/orders', orderRoute);
 
 module.exports = app;
