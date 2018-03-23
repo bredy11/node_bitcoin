@@ -8,8 +8,7 @@ exports.create = async(data) => {
 }
 
 exports.authenticate = async(data) => {
-    console.log(data.email);
-    console.log(data.password);
+ 
     const res = await Customer.findOne({
         email: data.email,
         password: data.password

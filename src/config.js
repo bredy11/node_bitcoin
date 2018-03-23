@@ -4,5 +4,10 @@ global.EMAIL_TMPL = 'Olá, <strong>{0}</strong>, seja bem vindo à Node Store!';
 module.exports = {
     connectionString: 'mongodb://rafael:rafael@ds012538.mlab.com:12538/dbtreinamento',
     sendgridKey: 'SUA CHAVE',
-    containerConnectionString: 'SUA CONNECTION STRING'
+    conexaoMysql: {
+        host: 'localhost',
+		user: 'root',
+		password: '',
+		database: 'quaresma'
+    }
 }
