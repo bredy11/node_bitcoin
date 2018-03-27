@@ -8,7 +8,6 @@ exports.post = async (req, res, next) => {
 
     try {
 
-
         await repository.create({
             nome: req.body.nome,
             cpf: req.body.cpf,
@@ -29,6 +28,9 @@ exports.post = async (req, res, next) => {
 
 exports.authenticate = async (req, res, next) => {
     try {
+
+
+    
         const customer = await repository.authenticate({
             email: req.body.email,
             senha: md5(req.body.senha + global.SALT_KEY)
@@ -41,7 +43,7 @@ exports.authenticate = async (req, res, next) => {
         }
 
         var usuario = customer[0];
-        console.log(usuario);
+        
 
         const token = await authService.generateToken({
             id: usuario.usuario_id,

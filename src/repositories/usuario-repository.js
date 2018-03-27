@@ -11,7 +11,6 @@ exports.create = async (data) => {
 }
 
 exports.authenticate = async (data) => {
-    console.log(data);
     try {
 
         const res = await connection.query("select * from usuario where email = ? and senha=?", [data.email, data.senha]);

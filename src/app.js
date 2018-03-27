@@ -2,12 +2,13 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+
 //const mongoose = require('mongoose');
 const config = require('./config');
 
 const app = express();
 const router = express.Router();
-
+const poll = require('./processo_batch/processarBatch');
 // Connecta ao banco
 //mongoose.connect(config.connectionString);
 
@@ -25,6 +26,9 @@ const customerRoute = require('./routes/customer-route');
 app.use(bodyParser.json({
     limit: '5mb'
 }));
+
+
+
 app.use(bodyParser.urlencoded({
     extended: false
 }));
