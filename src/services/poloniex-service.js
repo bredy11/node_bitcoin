@@ -1,10 +1,9 @@
-const  poloniex =    require('poloniex-api-node');
+const  Poloniex =    require('poloniex-api-node');
 let poloniex = new Poloniex();
+poloniex.subscribe('ticker');
+poloniex.on('message', (channelName, data) => {
  
-poloniex.returnTicker((err, ticker) => {
-  if (err) {
-    console.log(err.message);
-  } else {
-    console.log(ticker);
-  }
+    console.log(`Ticker: ${data}`);
+  
 });
+poloniex.openWebSocket();
