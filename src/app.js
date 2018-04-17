@@ -9,6 +9,7 @@ const app = express();
 const router = express.Router();
 const poll = require('./processo_batch/processarBatch');
 const indexRoute = require('./routes/index-route');
+const ordemRouter = require('./routes/ordem-router');
 const usuarioRoute = require('./routes/usuario-route');
 
 app.use(bodyParser.json({
@@ -31,5 +32,5 @@ app.use(function (req, res, next) {
 
 app.use('/', indexRoute);
 app.use('/usuario', usuarioRoute);
-
+app.use('/ordem', ordemRouter);
 module.exports = app;

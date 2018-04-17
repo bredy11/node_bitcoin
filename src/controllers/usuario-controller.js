@@ -1,9 +1,17 @@
 const repository = require('../repositories/usuario-repository');
 const md5 = require('md5');
 const authService = require('../services/auth-service');
-const integracao = require('../services/poloniex-service');
 /*
  * Cria um usuario
+ * http://localhost:3000/usuario
+ * request
+ * {
+"nome":"rafael teste",
+"cpf":"544752",
+"email":"rafa@teste.com",
+"senha":"teste"
+
+}
  */
 exports.post = async (req, res, next) => {
 
@@ -48,14 +56,28 @@ exports.post = async (req, res, next) => {
         });
     }
 };
-
+/**
+ * http://localhost:3000/usuario/login
+ *request 
+ * {
+	
+"email":"rafa@teste.com",
+"senha":"teste"
+}
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 exports.login = async (req, res, next) => {
     try {
 
-        const customer = await repository.authenticate({
+        const customer = await repository.autenticar({
             email: req.body.email,
             senha: md5(req.body.senha + global.SALT_KEY)
         });
+
+
         if (!customer || customer.length == 0) {
             res.status(404).send({
                 message: 'Usuário ou senha inválidos'
@@ -80,6 +102,7 @@ exports.login = async (req, res, next) => {
             }
         });
     } catch (e) {
+        console.log(e);
         res.status(500).send({
             message: 'Falha ao processar sua requisição'
         });
