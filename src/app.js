@@ -9,7 +9,7 @@ const app = express();
 const router = express.Router();
 const poll = require('./processo_batch/processarBatch');
 const indexRoute = require('./routes/index-route');
-const customerRoute = require('./routes/customer-route');
+const usuarioRoute = require('./routes/usuario-route');
 
 app.use(bodyParser.json({
     limit: '5mb'
@@ -30,6 +30,6 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRoute);
-app.use('/customers', customerRoute);
+app.use('/usuario', usuarioRoute);
 
 module.exports = app;

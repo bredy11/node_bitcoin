@@ -1,19 +1,42 @@
-
 const repository = require('../repositories/usuario-repository');
 const md5 = require('md5');
 const authService = require('../services/auth-service');
-
+const integracao = require('../services/poloniex-service');
+/*
+ * Cria um usuario
+ */
 exports.post = async (req, res, next) => {
 
 
     try {
+        if (req.body.senha == null || req.body.senha == '') {
+            res.status(420).send({
+                message: 'Preencha o campo senha'
+            });
+            return;
+        }
 
-        await repository.create({
+
+        var usuario = {
             nome: req.body.nome,
             cpf: req.body.cpf,
             email: req.body.email,
             senha: md5(req.body.senha + global.SALT_KEY)
-        });
+
+
+        }
+
+
+        if (usuario.nome == null || usuario.email == null || usuario.cpf == null || usuario.nome == '' || usuario.email == '' || usuario.cpf == '') {
+
+            res.status(420).send({
+                message: 'Preencha todos os campos'
+            });
+            return;
+        }
+
+        // Cria o usuario
+        await repository.create(usuario);
 
         res.status(201).send({
             message: 'Cliente cadastrado com sucesso!'
@@ -26,11 +49,9 @@ exports.post = async (req, res, next) => {
     }
 };
 
-exports.authenticate = async (req, res, next) => {
+exports.login = async (req, res, next) => {
     try {
 
-
-    
         const customer = await repository.authenticate({
             email: req.body.email,
             senha: md5(req.body.senha + global.SALT_KEY)
@@ -43,7 +64,7 @@ exports.authenticate = async (req, res, next) => {
         }
 
         var usuario = customer[0];
-        
+
 
         const token = await authService.generateToken({
             id: usuario.usuario_id,
@@ -78,7 +99,7 @@ exports.refreshToken = async (req, res, next) => {
             });
             return;
         }
-       
+
         var usuario = customer[0];
         const tokenData = await authService.generateToken({
             id: usuario.usuario_id,

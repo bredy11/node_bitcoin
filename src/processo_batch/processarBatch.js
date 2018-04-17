@@ -1,4 +1,7 @@
 const CronJob = require('cron').CronJob
+const integracao = require('../services/poloniex-service');
+
 const job = new CronJob('0 * * * * *', () => {
-    console.log('teste de back');
+    integracao.salvarCotacao();
+    console.log("cotação salva");
 }, null, true);
