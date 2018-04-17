@@ -3,7 +3,7 @@
  nodemon .\bin\server.js
 
 
-banco de dados script
+--banco de dados script
 
 -- phpMyAdmin SQL Dump
 -- version 4.5.5.1
