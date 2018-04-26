@@ -21,4 +21,4 @@ exports.salvarCotacao = async (data) => {
     console.log(error);
     throw error;
   }
-}
+} 
