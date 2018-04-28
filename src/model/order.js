@@ -5,7 +5,7 @@ const schema = new Schema({
     usuario: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario'
-    },   
+    },
     createDate: {
         type: Date,
         required: true,
@@ -14,32 +14,24 @@ const schema = new Schema({
     type: {
         type: String,
         required: true,
-        enum: ['COMPRA', 'VENDA'] 
+        enum: ['COMPRA', 'VENDA']
     },
     status: {
         type: String,
         required: true,
-        enum: ['FEITA', 'ANALISE','CANCELADA'],
+        enum: ['FEITA', 'ANALISE', 'CANCELADA'],
         default: 'ANALISE'
     },
-    moeda : [{
-        quantidade: {
-            type: Number,
-            required: true,
-          
-        },
-        tipo: {
-            type: String,
-            required: true
-        },
+    moeda: {
+        type: String,
+        required: true,
+    },
+    quantidade: {
+        type: Number,
+        default: 0
+    }
 
-        valor: {
-            type: Number,
-            required: true
-        }
-       
-         
-    }]
+
 });
 
-module.exports = mongoose.model('Order', schema);
+module.exports = mongoose.model('Ordem', schema);

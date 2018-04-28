@@ -9,5 +9,7 @@ router.post('/login', controller.login);
 router.post('/refresh-token', authService.authorize, controller.refreshToken);
 
 router.post('/inserirMoeda', authService.authorize, controller.inserirMoeda);
+router.post('/definirValorParada', authService.authorize, controller.definirValorParada);
+
 
 module.exports = router;

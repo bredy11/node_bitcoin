@@ -65,24 +65,16 @@
          const token = req.body.token || req.query.token || req.headers['x-access-token'];
          const data = await authService.decodeToken(token);
          var ordem = {
-             usuario_id: data.id,
+             usuario: data.id,
              valor_por_btc: req.body.valorPorBtc,
-             tipo: req.body.tipo,
-             qtdbtc: req.body.qtdbtc,
-             data:new Date()
+             type: req.body.type,
+             status:req.body.status,
+             moeda:req.body.moeda,
+             quantidade:req.body.quantidade,
+             createDate:new Date()
          }
-         if (ordem.qtdbtc == null || ordem.tipo == null || ordem.usuario_id == null || ordem.valor_por_btc == null ||
-             ordem.qtdbtc == '' || ordem.tipo == '' || ordem.usuario_id == '' || ordem.valor_por_btc == '' || (ordem.tipo != 'COMPRAR' && ordem.tipo != 'VENDER')) {
-
-             res.status(420).send({
-                 message: 'Erro ao validar valores da ordem'
-             });
-             return;
-         }
-
-
-
-
+       
+  
          await ordemRepository.criarOrdem(ordem);
          res.status(201).send({
              message: 'A ordem foi gravada com sucesso!'

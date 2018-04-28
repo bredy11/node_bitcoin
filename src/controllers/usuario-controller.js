@@ -1,7 +1,9 @@
+  
 const repository = require('../repositories/usuario-repository');
+const valorParadaRepository = require('../repositories/valorParada-repository');
 const md5 = require('md5');
 const authService = require('../services/auth-service');
-const usuarioService = require('../services/usuario-service');
+
 
 /*
  * Cria um usuario
@@ -86,7 +88,7 @@ exports.login = async (req, res, next) => {
             });
             return;
         }
- 
+
 
         const token = await authService.generateToken({
             id: usuario.id,
@@ -110,9 +112,7 @@ exports.login = async (req, res, next) => {
 };
 
 /**
- * {
- * 
- * }
+ * inserir moeda ou valor para um usuario iniciar
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
@@ -126,14 +126,14 @@ exports.inserirMoeda = async (req, res, next) => {
         const usuario = await repository.getById(data.id);
 
 
-        if (usuario==null) {
+        if (usuario == null) {
             res.status(404).send({
                 message: 'Cliente não encontrado, refazer login'
             });
             return;
         }
-        await repository.inserirMoeda(usuario,moeda);
-        
+        await repository.inserirMoeda(usuario, moeda);
+
         res.status(200).send({
             message: 'Moeda inserida'
         });
@@ -143,6 +143,35 @@ exports.inserirMoeda = async (req, res, next) => {
         });
     }
 };
+
+
+
+exports.definirValorParada = async (req, res, next) => {
+
+
+    try {
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const data = await authService.decodeToken(token);
+        const usuario = await repository.getById(data.id);
+        const valorParada = req.body;
+
+        if (usuario == null) {
+            res.status(404).send({
+                message: 'Cliente não encontrado, refazer login'
+            });
+            return;
+        }
+        await valorParadaRepository.create(valorParada,usuario);
+        res.status(200).send({
+            message: 'Parada gravada'
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
+        });
+    }
+}; 
 
 
 
@@ -159,19 +188,18 @@ exports.refreshToken = async (req, res, next) => {
             });
             return;
         }
-
-        var usuario = customer[0];
+ 
         const tokenData = await authService.generateToken({
-            id: usuario.usuario_id,
-            email: usuario.email,
-            name: usuario.nome
+            id: customer.id,
+            email: customer.email,
+            name: customer.nome
         });
 
         res.status(201).send({
             token: tokenData,
             data: {
-                email: usuario.email,
-                name: usuario.nome
+                email: customer.email,
+                name: customer.nome
             }
         });
     } catch (e) {

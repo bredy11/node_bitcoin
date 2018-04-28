@@ -6,33 +6,33 @@ const schema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario'
     },
-    venda: {
+    tipo: {
+        type: String,
+    },
+    "status": {
+        type: Boolean,
+        default: true
+    },
+    "valorAlerta": {
         type: Number,
-
+        required: true
     },
-    compra: {
-        type: Number,
-
-    },
-    createDate: {
-        type: Date,
-        required: true,
-        default: Date.now
-    },
-    
-    moeda: [{
-        quantidade: {
-            type: Number,
-            required: true,
-
+    moedas: {
+        ltc: {
+            quantidade: {
+                type: Number,
+                default: 0
+            }
         },
-        valor: {
-            type: Number,
-            required: true
+        btc: {
+            quantidade: {
+                type: Number,
+                default: 0
+            }
         }
 
 
-    }]
+    }
 });
 
 module.exports = mongoose.model('ValorParada', schema);
