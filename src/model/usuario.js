@@ -25,9 +25,28 @@ const schema = new Schema({
     roles: [{
         type: String,
         required: true,
-        enum: ['user', 'admin'],
-        default: 'user'
-    }]
+
+    }],
+    valor: {
+        type: Number
+
+    },
+    moedas: {
+        ltc: {
+            quantidade: {
+                type: Number,
+                default: 0
+            }
+        },
+        btc: {
+            quantidade: {
+                type: Number,
+                default: 0
+            }
+        }
+
+
+    }
 
 
 

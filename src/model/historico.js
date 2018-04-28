@@ -19,12 +19,20 @@ const schema = new Schema({
         enum: ['FEITA', 'ANALISE','CANCELADA'],
         default: 'ANALISE'
     },
+    valor:{
+        type: Number
+    },
     moeda: [{
         quantidade: {
             type: Number,
             required: true,
 
         },
+        tipo: {
+            type: String,
+            required: true
+        },
+
         valor: {
             type: Number,
             required: true

@@ -28,6 +28,11 @@ const schema = new Schema({
             required: true,
           
         },
+        tipo: {
+            type: String,
+            required: true
+        },
+
         valor: {
             type: Number,
             required: true

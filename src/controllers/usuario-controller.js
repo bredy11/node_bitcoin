@@ -1,6 +1,7 @@
 const repository = require('../repositories/usuario-repository');
 const md5 = require('md5');
 const authService = require('../services/auth-service');
+const usuarioService = require('../services/usuario-service');
 
 /*
  * Cria um usuario
@@ -73,24 +74,22 @@ exports.post = async (req, res, next) => {
 exports.login = async (req, res, next) => {
     try {
 
-        const customer = await repository.autenticar({
+        const usuario = await repository.autenticar({
             email: req.body.email,
             senha: md5(req.body.senha + global.SALT_KEY)
         });
 
 
-        if (!customer || customer.length == 0) {
+        if (usuario == null) {
             res.status(404).send({
                 message: 'Usuário ou senha inválidos'
             });
             return;
         }
-
-        var usuario = customer[0];
-
+ 
 
         const token = await authService.generateToken({
-            id: usuario.usuario_id,
+            id: usuario.id,
             email: usuario.email,
             name: usuario.nome
         });
@@ -109,6 +108,43 @@ exports.login = async (req, res, next) => {
         });
     }
 };
+
+/**
+ * {
+ * 
+ * }
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.inserirMoeda = async (req, res, next) => {
+    try {
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const data = await authService.decodeToken(token);
+        const moeda = req.body;
+
+        const usuario = await repository.getById(data.id);
+
+
+        if (usuario==null) {
+            res.status(404).send({
+                message: 'Cliente não encontrado, refazer login'
+            });
+            return;
+        }
+        await repository.inserirMoeda(usuario,moeda);
+        
+        res.status(200).send({
+            message: 'Moeda inserida'
+        });
+    } catch (e) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição'
+        });
+    }
+};
+
+
 
 exports.refreshToken = async (req, res, next) => {
     try {

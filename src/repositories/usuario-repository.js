@@ -12,9 +12,37 @@ exports.create = async (data) => {
 }
 
 exports.autenticar = async (data) => {
-
+    const res = await Usuario.findOne({
+        email: data.email,
+        senha: data.senha
+    });
+    return res;
 }
 
 exports.getById = async (id) => {
+    const res = await Usuario.findById(id);
+    return res;
+}
 
+exports.inserirMoeda = async (usuario, moeda) => {
+
+    if (moeda.tipo == 'LTC') {
+
+        usuario.moedas.ltc.quantidade += moeda.quantidade;
+    } else if (moeda.tipo == 'BTC') {
+        usuario.moedas.btc.quantidade += moeda.quantidade;
+    }
+
+    if (moeda.valor != null) {
+
+        usuario.valor = moeda.valor;
+    }
+
+    await Usuario
+        .findByIdAndUpdate(usuario.id, {
+            $set: {
+                valor: usuario.valor,
+                moedas: usuario.moedas
+            }
+        });
 }

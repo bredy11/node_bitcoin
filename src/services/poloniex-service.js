@@ -1,7 +1,8 @@
  
 const Poloniex = require('poloniex-api-node');
 let poloniex = new Poloniex();
-const cotacaoRepository = require("../repositories/poloniex-repository")
+const cotacaoRepository = require("../repositories/poloniex-repository");
+
 
 exports.salvarCotacao = async (data) => {
   try {
