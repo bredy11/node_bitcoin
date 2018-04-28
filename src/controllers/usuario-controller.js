@@ -2,8 +2,6 @@ const repository = require('../repositories/usuario-repository');
 const md5 = require('md5');
 const authService = require('../services/auth-service');
 
-const mongoose = require('mongoose');
-const teste =  mongoose.model('usuario');
 /*
  * Cria um usuario
  * http://localhost:3000/usuario

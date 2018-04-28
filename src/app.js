@@ -2,21 +2,15 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const config = require('./config');
 const mongoose = require('mongoose');
-
-//const poll = require('./processo_batch/processarBatch');
-const indexRoute = require('./routes/index-route');
-const ordemRouter = require('./routes/ordem-router');
-const usuarioRoute = require('./routes/usuario-route');
 
 const app = express();
 const router = express.Router();
 
 
 // Connecta ao banco
-mongoose.createConnection(config.connectionString);
+mongoose.connect(config.connectionString);
 
 //model
 const Usuario = require('./model/usuario');
@@ -25,14 +19,18 @@ const Historico = require('./model/historico');
 const ValorParada = require('./model/valorParada');
 
 
+//rotas
+//const poll = require('./processo_batch/processarBatch');
+const indexRoute = require('./routes/index-route');
+const ordemRouter = require('./routes/ordem-router');
+const usuarioRoute = require('./routes/usuario-route');
+
 
 
 
 app.use(bodyParser.json({
     limit: '5mb'
 }));
-
-
 
 app.use(bodyParser.urlencoded({
     extended: false
