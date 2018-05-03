@@ -6,6 +6,7 @@ const authService = require('../services/auth-service');
 
 router.post('/', controller.post);
 router.post('/login', controller.login);
+router.get('/todos', controller.todos);
 router.post('/refresh-token', authService.authorize, controller.refreshToken);
 
 router.post('/inserirMoeda', authService.authorize, controller.inserirMoeda);

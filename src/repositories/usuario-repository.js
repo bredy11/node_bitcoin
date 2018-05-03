@@ -24,6 +24,11 @@ exports.getById = async (id) => {
     return res;
 }
 
+exports.todosUsuario = async (id) => {
+    const res = await Usuario.find();
+    return res;
+}
+
 exports.inserirMoeda = async (usuario, moeda) => {
 
     if (moeda.tipo == 'LTC') {
